@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.entity.Account;
@@ -73,6 +72,11 @@ public class SocialMediaController {
     @PatchMapping("/messages/{messageId}")
     public ResponseEntity<Integer> updateMessageTextById(@PathVariable int messageId, @RequestBody Message message) {
         return ResponseEntity.status(200).body(messageService.updateMessageTextById(messageId, message.getMessageText()));
+    }
+
+    @GetMapping("/accounts/{accountId}/messages")
+    public ResponseEntity<List<Message>> getAllMessagesByPostedBy(@PathVariable int accountId) {
+        return ResponseEntity.status(200).body(messageService.getAllMessagesByPostedBy(accountId));
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)

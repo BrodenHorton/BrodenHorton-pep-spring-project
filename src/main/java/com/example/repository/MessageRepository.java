@@ -13,6 +13,9 @@ import com.example.entity.Message;
 public interface MessageRepository extends JpaRepository<Message, Long> {
     Message findByMessageId(int messageId);
     
+    List<Message> findAllByPostedBy(int postedBy);
+    
     @Transactional
     Long deleteByMessageId(int messageId);
+
 }
