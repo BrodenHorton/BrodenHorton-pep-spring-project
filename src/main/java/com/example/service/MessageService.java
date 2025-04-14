@@ -46,4 +46,21 @@ public class MessageService {
         return messageRepository.findByMessageId(id);
     }
 
+    public Integer deleteMessageById(int id) {
+        long messagesDeleted = messageRepository.deleteByMessageId(id);
+        return  messagesDeleted > 0 ? (int)messagesDeleted : null;
+    }
+
+    public Integer updateMessageTextById(int id, String messageText) {
+        if(messageText.equals("") || messageText.length() > 255) {
+            throw new InvalidModelFieldValuesException("Message text must be between 1 and 255 characters.");
+        }
+        if(accountRepository.findByAccountId(id) == null) {
+            throw new InvalidModelFieldValuesException("User could not be found.");
+        }
+
+        long updatedMessages = messageRepository.setMessageTextByMessageId(messageText, id);
+        return  updatedMessages > 0 ? (int)updatedMessages : null;
+    }
+
 }

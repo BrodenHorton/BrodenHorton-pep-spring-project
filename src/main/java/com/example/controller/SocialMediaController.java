@@ -65,6 +65,16 @@ public class SocialMediaController {
         return ResponseEntity.status(200).body(messageService.getMessageById(messageId));
     }
 
+    @DeleteMapping("/messages/{messageId}")
+    public ResponseEntity<Integer> deleteMessageById(@PathVariable int messageId) {
+        return ResponseEntity.status(200).body(messageService.deleteMessageById(messageId));
+    }
+
+    @PatchMapping("/messages/{messageId}")
+    public ResponseEntity<Integer> updateMessageTextById(@PathVariable int messageId, @RequestBody Message message) {
+        return ResponseEntity.status(200).body(messageService.updateMessageTextById(messageId, message.getMessageText()));
+    }
+
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public String handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
