@@ -55,12 +55,14 @@ public class MessageService {
         if(messageText.equals("") || messageText.length() > 255) {
             throw new InvalidModelFieldValuesException("Message text must be between 1 and 255 characters.");
         }
-        if(accountRepository.findByAccountId(id) == null) {
+        Message message = messageRepository.findByMessageId(id);
+        if(message == null) {
             throw new InvalidModelFieldValuesException("User could not be found.");
         }
 
-        long updatedMessages = messageRepository.setMessageTextByMessageId(messageText, id);
-        return  updatedMessages > 0 ? (int)updatedMessages : null;
+        message.setMessageText(messageText);
+        messageRepository.save(message);
+        return 1;
     }
 
 }
