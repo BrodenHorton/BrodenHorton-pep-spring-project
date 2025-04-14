@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.entity.Account;
+import com.example.entity.Message;
 import com.example.service.AccountService;
+import com.example.service.MessageService;
 import com.example.exception.DataIntegrityViolationException;
 import com.example.exception.InvalidLoginException;
 import com.example.exception.InvalidModelFieldValuesException;
@@ -25,10 +29,12 @@ import com.example.exception.InvalidModelFieldValuesException;
 @RestController
 public class SocialMediaController {
     AccountService accountService;
+    MessageService messageService;
 
     @Autowired
-    public SocialMediaController(AccountService accountService) {
+    public SocialMediaController(AccountService accountService, MessageService messageService) {
         this.accountService = accountService;
+        this.messageService = messageService;
     }
 
     @PostMapping("/register")
@@ -41,6 +47,22 @@ public class SocialMediaController {
     public ResponseEntity<Account> login(@RequestBody Account account) {
         Account loginAccount = accountService.login(account);
         return ResponseEntity.status(200).body(loginAccount);
+    }
+
+    @PostMapping("/messages")
+    public ResponseEntity<Message> createMessage(@RequestBody Message message) {
+        Message postedMessage = messageService.createMessage(message);
+        return ResponseEntity.status(200).body(postedMessage);
+    }
+
+    @GetMapping("/messages")
+    public ResponseEntity<List<Message>> getAllMessages() {
+        return ResponseEntity.status(200).body(messageService.getAllMessages());
+    }
+
+    @GetMapping("/messages/{messageId}")
+    public ResponseEntity<Message> getMessageById(@PathVariable int messageId) {
+        return ResponseEntity.status(200).body(messageService.getMessageById(messageId));
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
