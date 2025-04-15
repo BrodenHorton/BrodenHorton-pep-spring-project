@@ -152,18 +152,36 @@ public class SocialMediaController {
         return ResponseEntity.status(200).body(messageService.getAllMessagesByPostedBy(accountId));
     }
 
+    /**
+     * Exception handler for a DataIntegrityViolationException. Returns a 409 (Conflict) status code and
+     * an exception message.
+     * @param  ex The DataIntegrityViolationException that was thrown.
+     * @return A String of the exception message.
+     */
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public String handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
         return ex.getMessage();
     }
 
+    /**
+     * Exception handler for a InvalidModelFieldValuesException. Returns a 400 (Client Error) status code and
+     * an exception message.
+     * @param  ex The InvalidModelFieldValuesException that was thrown.
+     * @return A String of the exception message.
+     */
     @ExceptionHandler(InvalidModelFieldValuesException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleInvalidModelFieldValuesException(InvalidModelFieldValuesException ex) {
         return ex.getMessage();
     }
 
+    /**
+     * Exception handler for a InvalidLoginException. Returns a 401 (Unauthorized) status code and
+     * an exception message.
+     * @param  ex The InvalidLoginException that was thrown.
+     * @return A String of the exception message.
+     */
     @ExceptionHandler(InvalidLoginException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public String handleInvalidLoginException(InvalidLoginException ex) {
