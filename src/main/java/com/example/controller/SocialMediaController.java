@@ -27,8 +27,9 @@ import com.example.exception.InvalidModelFieldValuesException;
  */
 
  /**
-  * A controller class that exposes endpoints and adds the proper handler method to each endpoint. This class also
-  * defines exception handlers for potential exceptions that can be thrown by the endpoint handler methods.
+  * SocialMediaController is a controller class that exposes endpoints and adds the proper handler method to each
+  * endpoint. This class also defines exception handlers for potential exceptions that can be thrown by the endpoint
+  * handler methods.
   * @author Broden Horton
   */
 @RestController
